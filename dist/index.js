@@ -99,14 +99,18 @@ export default class AnimateNumber extends Component {
       , this.props.startAt != null ? this.props.startAt : 0);
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
 
     // check if start an animation
-    if(this.props.value !== nextProps.value) {
-      this.startFrom = this.props.value
-      this.endWith = nextProps.value
+    if(prevProps.value !== this.props.value) {
+      this.startFrom = prevProps.value
+      this.endWith = this.props.value
       this.dirty = true
-      this.startAnimate()
+      setTimeout(
+        () => {
+          this.startAnimate()
+        }
+        , this.props.startAt != null ? this.props.startAt : 0);
       return
     }
     // Check if iterate animation frame
